@@ -6,7 +6,7 @@ const server = express();
 
 //Settings
 server.set('port', 4800);
-server.use(cors);
+server.use(cors());
 server.use(express.json());
 
 //Routes

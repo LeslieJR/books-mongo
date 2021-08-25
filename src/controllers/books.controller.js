@@ -25,16 +25,38 @@ const all = async (req, res) =>{
     res.json({books});
 }
 
-const getOne = (req, res) =>{
-    res.send('one book')
+const getOne = async (req, res) =>{
+    const {id} = req.params;
+    //use try and catch 
+    try{
+      //findById
+      const book = await models.book.findById(id);
+      return res.json({book})  
+    }catch{
+        return res.json({message:"There was an error."})
+    }
+
 }
 
-const updateOne = (req, res) =>{
-    res.send('book updated')
+const updateOne = async (req, res) =>{
+    const {id} = req.params;
+    const {author, description, punctuation} = req.body;
+    // to update one task -> updateOne({_id:id},{$set: {title, description}}) -> this does not return the updated object
+    // to update and return an object: findOneAndUpdate({_id:id},{$set:{title, description}}, {new:true})
+    const book = await models.book.findOneAndUpdate(
+        {_id:id},
+        {$set:{author, description, punctuation}},
+        {new: true}
+        )
+    res.json({book})
 }
 
-const deleteOne = (req, res) =>{
-    res.send('book deleted')
+const deleteOne = async (req, res) =>{
+    const {id} = req.params;
+    //to remove one task -> remove{_id: id} does not return the object // 
+    //to return the object removed: findOneAndRemove({_id:id}) 
+    const book = await models.book.findOneAndRemove({_id:id})
+    res.json({book})
 }
 
 module.exports = {
