@@ -11,6 +11,7 @@ server.use(express.json());
 
 //Routes
 
-server.use('/books', routes.bookRoutes)
+server.use('/books', routes.bookRoutes);
+server.use('/users', routes.userRoutes)
 
 module.exports = server;
